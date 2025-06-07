@@ -1,0 +1,51 @@
+{
+  "products": [
+    {
+      "id": "1",
+      "name": "Banana",
+      "price": 60,
+      "quantity": 10,
+      "description": "1 dozen",
+      "imgLink": "https://bazarstore.az/cdn/shop/products/30015539_767x1000.jpg?v=1693895477"
+    }
+  ],
+  "users": [
+    {
+      "id": "47023",
+      "username": "umang",
+      "email": "uchaudhary2022002@gmail.com",
+      "password": "123",
+      "address": "Gandhinagar",
+      "contact": "7623932860"
+    },
+    {
+      "id": 55778,
+      "username": "Rutvik",
+      "email": "rutvik@gmail",
+      "password": "Rutvik@123",
+      "address": "Gandhinagar",
+      "contact": "6543219870"
+    }
+  ],
+  "cart": [
+    {
+      "id": "5a5a",
+      "userId": "47023",
+      "items": [
+        {
+          "id": "1",
+          "name": "Banana",
+          "price": 60,
+          "quantity": 1,
+          "userId": "47023"
+        }
+      ]
+    },
+    {
+      "id": "de25",
+      "userId": "55778",
+      "items": []
+    }
+  ],
+  "transaction": []
+}
