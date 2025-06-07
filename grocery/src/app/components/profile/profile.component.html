@@ -1,0 +1,28 @@
+
+
+<!-- Profile Section -->
+<div class="profile-container" *ngIf="user">
+    <h2 id="user-name">Welcome, {{ userName || 'Guest' }}</h2>
+
+    <div class="profile-details">
+        <label>ID:</label>
+        <input type="text" [(ngModel)]="user.id" disabled>
+
+        <label>Username:</label>
+        <input type="text" [(ngModel)]="user.name" [disabled]="!isEditing">
+
+
+
+        <label>Address:</label>
+        <input type="text" [(ngModel)]="user.address" [disabled]="!isEditing">
+
+        <label>Contact:</label>
+        <input type="text" [(ngModel)]="user.contactNumber" [disabled]="!isEditing">
+    </div>
+    <br>
+    <!-- Update & Save Buttons -->
+    <div class="buttons">
+        <button id="update-btn" *ngIf="!isEditing" (click)="enableEditing()">Update</button>
+        <button id="save-btn" *ngIf="isEditing" (click)="saveChanges()">Save</button>
+    </div>
+</div>

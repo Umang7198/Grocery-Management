@@ -1,0 +1,48 @@
+<button [routerLink]="['/home']" class="btn btn-primary" style="margin-top: 20px;margin-left: 20px; background-color: #2ecc71;border: none;">Back to products</button>
+<h2 class="head">Products in <strong> {{ selectedCategory }}</strong></h2>
+
+<div class="search-container mt-4">
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="Search for products" aria-label="Search"
+            [(ngModel)]="searchString">
+        <button class="btn btn-light" type="button" >
+            <i class="fas fa-search" ></i>
+        </button>
+    </div>
+</div>
+<section id="categories" class="category-section">
+    <!-- <h2 class="text-center mb-5"><b>Featured Products</b></h2> -->
+    <div class="Fcontainer">
+        <div class="product">
+        <div class="product-card" *ngFor="let product of filteredProductsBySearch">
+            <div class="wishlist-icon" (click)="toggleWishlist(product)">
+                <i class="fa fa-heart" [ngClass]="{'wishlist-added': isInWishlist(product), 'wishlist-not-added': !isInWishlist(product)}"></i>
+            </div>
+            <img [src]="product.imgLink" alt="{{ product.name }}" style="width:100%; height:50%; padding-bottom:10px" />
+            <h3>{{ product.name }}</h3>
+            <p style="margin: 1px;">Price: Rs. {{ product.price }}</p>
+            <p style="margin: 1px;">{{ product.description }}</p>
+            <p> Stock : {{ product.quantity }}</p>
+
+            <div *ngIf="getQuantityInCart(product.id) === 0">
+                <button (click)="addToCart(product.id)" class="btn btn-primary">Add to Cart</button>
+            </div>
+
+            <div *ngIf="getQuantityInCart(product.id) > 0" class="quantity-control">
+                <button (click)="updateQuantity(product.id, -1)" class="btn btn-decrease">-</button>
+                <span style="display: inline-block;width: 40px;">{{ getQuantityInCart(product.id) }}</span>
+                <button (click)="updateQuantity(product.id, 1)" class="btn btn-increase">+</button>
+            </div>
+        </div>
+
+        <div *ngIf="filteredProductsBySearch.length === 0" class="no-products" style="display: flex;justify-content: center;">
+            <h4 style="text-align: center;">No Products Available</h4>
+        </div>
+    </div>
+    </div>
+</section>
+    <ng-template #noProducts>
+      <p class="no-products">No products available in this category.</p>
+    </ng-template>
+  
+  

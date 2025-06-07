@@ -1,0 +1,26 @@
+<section class="wishlist-section">
+    <h2 class="text-center"><b>My Wishlist</b></h2>
+    <div *ngIf="wishlist.length > 0; else emptyWishlist">
+        <table class="wishlist-table">
+            <thead>
+                
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of wishlist">
+                    <td><img [src]="product.imgLink" alt="{{ product.name }}" class="wishlist-img"></td>
+                    <td>{{ product.name }}</td>
+                    <td>Rs. {{ product.price }}</td>
+                    <td>
+                        <button *ngIf="!product.movedToCart" (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+                        <button *ngIf="product.movedToCart" class="btn btn-primary"><a [routerLink]="['/cart']"><font color="white">Continue to Cart</font></a></button>
+                        <button (click)="removeFromWishlist(product.id)" class="btn btn-danger">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <ng-template #emptyWishlist>
+        <p class="text-center">Your wishlist is empty.</p>
+        <a [routerLink]="['/home']" class="view-products">Begin Shopping!</a>
+    </ng-template>
+</section>

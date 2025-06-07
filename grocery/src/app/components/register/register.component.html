@@ -1,0 +1,74 @@
+
+
+<!-- Main Container -->
+<div class="main">
+    <div class="container">
+        <div class="img-container">
+            <img src="signup-image.avif" alt="Sign Up Image">
+        </div>
+        <div class="register-container">
+            <h2>Customer Registration</h2><br>
+            <form id="registrationForm" #registrationForm="ngForm">
+                <div class="form-group">
+                    <label for="username" data-bs-toggle="tooltip" data-bs-placement="top" title="Enter your name" class="required">Customer Name: </label>
+                    <input type="text" id="username" [(ngModel)]="username" name="username" maxlength="50" placeholder="Enter your name" required pattern="^[A-Za-z ]+$" #usernameInput="ngModel" />
+                    <div *ngIf="usernameInput.invalid && (usernameInput.dirty || usernameInput.touched)" class="error">
+                        <div *ngIf="usernameInput.errors?.['required']">Customer Name is required</div>
+                        <div *ngIf="usernameInput.errors?.['pattern']">Customer Name must contain only alphabets and spaces</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="required">Email:</label>
+                    <input type="email" id="email" [(ngModel)]="email" name="email" placeholder="Enter your email" required email #emailInput="ngModel" />
+                    <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="error">
+                        <div *ngIf="emailInput.errors?.['required']">Email is required</div>
+                        <div *ngIf="emailInput.errors?.['email']">Invalid email format</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="required" data-bs-toggle="tooltip" data-bs-placement="top" title="Password should contain atlest 1 Uppercase, 1 Lowercase, 1 number and 6 characters long">Password:</label>
+                    <input type="password" id="password" [(ngModel)]="password" name="password" maxlength="30" placeholder="Enter your password" required pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$" #passwordInput="ngModel" />
+                    <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="error">
+                        <div *ngIf="passwordInput.errors?.['required']">Password is required</div>
+                        <div *ngIf="passwordInput.errors?.['pattern']">Password must have at least one uppercase letter, one number, one special character, and be at least 6 characters long</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" class="required">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" [(ngModel)]="confirmPassword" name="confirmPassword" maxlength="30" placeholder="Confirm your password" required #confirmPasswordInput="ngModel" />
+                    <div *ngIf="confirmPasswordInput.invalid && (confirmPasswordInput.dirty || confirmPasswordInput.touched)" class="error">
+                        <div *ngIf="confirmPasswordInput.errors?.['required']">Confirm Password is required</div>
+                    </div>
+                    <div *ngIf="password !== confirmPassword && confirmPasswordInput.dirty" class="error">
+                        Passwords do not match
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" class="required">Address:</label>
+                    <input type="text" id="address" [(ngModel)]="address" name="address" maxlength="100" placeholder="Enter your address" required #addressInput="ngModel" />
+                    <div *ngIf="addressInput.invalid && (addressInput.dirty || addressInput.touched)" class="error">
+                        <div *ngIf="addressInput.errors?.['required']">Address is required</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mobile" class="required">Contact Number:</label>
+                    <input type="text" id="mobile" [(ngModel)]="mobile" name="mobile" maxlength="10" placeholder="Enter your contact number" required pattern="^[6-9][0-9]{9}$" #mobileInput="ngModel" />
+                    <div *ngIf="mobileInput.invalid && (mobileInput.dirty || mobileInput.touched)" class="error">
+                        <div *ngIf="mobileInput.errors?.['required']">Contact Number is required</div>
+                        <div *ngIf="mobileInput.errors?.['pattern']">Contact Number must start with 6-9 and be 10 digits long</div>
+                    </div>
+                </div>
+                <button type="button" (click)="registerUser()" [disabled]="registrationForm.invalid || password !== confirmPassword">Register</button>
+                <br>
+                <br>
+                <a [routerLink]="['/login']">Already a member? <b>Login</b></a>
+            </form>
+            <div *ngIf="showModal" class="modal">
+                <div class="modal-content">
+                    <div [innerHTML]="successMessage"></div>
+                    <button (click)="goToLogin()">Go to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

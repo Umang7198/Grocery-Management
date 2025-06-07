@@ -1,0 +1,93 @@
+
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
+        <h5>Hello {{ userName }}, Welcome to Online Grocery Store!</h5>
+        <h1>Fresh Groceries Delivered to Your Doorstep</h1>
+        <p class="lead">Order fresh, quality groceries online with easy delivery</p>
+        <div class="search-container mt-4">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Search for groceries" aria-label="Search"
+                    [(ngModel)]="searchString">
+                <button class="btn btn-light" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Categories Section -->
+<section id="explore-categories" class="explore-category-section" *ngIf="(searchString=='')">
+    <h2 class="text-center mb-5"><b>Shop by Categories</b></h2>
+    <div class="explore-container">
+        <div class="category" *ngFor="let category of categories">
+            <img [src]="category.imgLink" alt="{{ category.name }}" style="width:75%; height:75%; padding-bottom:10px" />
+            <h3>{{ category.name }}</h3>
+            <button (click)="filterByCategory(category.name)" class="btn btn-primary">Explore</button>
+        </div>
+    </div>
+</section>
+
+
+<!-- Featured Products -->
+<section id="categories" class="category-section">
+    <h2 class="text-center mb-5"><b>Featured Products</b></h2>
+    <div class="Fcontainer">
+        <div class="product">
+        <div class="product-card" *ngFor="let product of filteredProducts">
+            <div class="wishlist-icon" (click)="toggleWishlist(product)">
+                <i class="fa fa-heart" [ngClass]="{'wishlist-added': isInWishlist(product), 'wishlist-not-added': !isInWishlist(product)}"></i>
+            </div>
+            <img [src]="product.imgLink" alt="{{ product.name }}" style="width:100%; height:50%; padding-bottom:10px" />
+            <h3>{{ product.name }}</h3>
+            <p style="margin: 1px;">Price: Rs. {{ product.price }}</p>
+            <p style="margin: 1px;">{{ product.description }}</p>
+            <p> Stock : {{ product.quantity }}</p>
+
+            <div *ngIf="getQuantityInCart(product.id) === 0">
+                <button (click)="addToCart(product)" class="btn btn-primary">Add to Cart</button>
+            </div>
+
+            <div *ngIf="getQuantityInCart(product.id) > 0" class="quantity-control">
+                <button (click)="updateQuantity(product, -1)" class="btn btn-decrease">-</button>
+                <span style="display: inline-block;width: 40px;">{{ getQuantityInCart(product.id) }}</span>
+                <button (click)="updateQuantity(product, 1)" class="btn btn-increase">+</button>
+            </div>
+        </div>
+
+        <div *ngIf="filteredProducts.length === 0" class="no-products" style="display: flex;justify-content: center;">
+            <h4 style="text-align: center;">No Products Available</h4>
+        </div>
+    </div>
+    </div>
+</section>
+
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Fresh Mart</h5>
+                <p>Your trusted online grocery store for fresh and quality products.</p>
+            </div>
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a [routerLink]="['/home']">Home</a></li>
+                    <li><a [routerLink]="['/home']">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Contact Info</h5>
+                <p>
+                    <i class="fas fa-map-marker-alt me-2"></i>Infocity, Gandhinagar<br>
+                    <i class="fas fa-phone me-2"></i>+91-1212121212<br>
+                    <i class="fas fa-envelope me-2"></i>support&#64;freshmart.com
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,95 @@
+.category-section {
+  padding: 50px 0;
+}
+
+.head{
+  text-align: center;
+  margin-top: 50px;
+
+}
+.category-card {
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+}
+
+.category-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.category-card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.featured-products {
+  background-color: white;
+  padding: 50px 0;
+}
+
+.Fcontainer {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.product{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 50px 50px;
+justify-content: center;
+}
+
+.product-card {
+  position: relative;
+  width: 250px;
+  height: 360px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #f1f8f2;
+  text-align: center;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  margin: 15px;
+}
+.search-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.product button {
+  background-color: rgb(40, 153, 40);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.btn-decrease{
+  width: 40px;
+}
+.btn-increase{
+  width: 40px;
+}
+
+ /* Wishlist Icon */
+ .wishlist-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+/* When added to wishlist (Pink) */
+.wishlist-added {
+  color: #ff4d6d;
+}
+
+/* When not in wishlist (White) */
+.wishlist-not-added {
+  color: rgb(212, 189, 189);
+}
+
+  

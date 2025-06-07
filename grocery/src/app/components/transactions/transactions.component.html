@@ -1,0 +1,146 @@
+<!-- Transaction Container -->
+<div class="transaction-container">
+   <div class="transaction-wrapper">
+   <!-- Payment Section -->
+   <div class="payment-section">
+   <h4><b>Choose Payment Method</b></h4>
+   <form id="paymentForm" class="payment-options">
+   <label class="mt-1">
+   <input type="radio"  style="width: auto;" name="paymentMethod" value="cod" (change)="showDetails('cod')" [(ngModel)]="selectedPayment"> COD
+   </label>
+   <br>
+   <label class="mt-1">
+   <input type="radio"  style="width: auto;" name="paymentMethod" value="upi" (change)="showDetails('upi')" [(ngModel)]="selectedPayment"> UPI
+   </label>
+   <br>
+   <label class="mt-1">
+   <input type="radio"  style="width: auto;" name="paymentMethod" value="credit" (change)="showDetails('credit')" [(ngModel)]="selectedPayment"> Credit Card
+   </label>
+   
+   
+   <br>
+   <label class="mt-1">
+   <input type="radio"  style="width: auto;" name="paymentMethod" value="debit" (change)="showDetails('debit')" [(ngModel)]="selectedPayment"> Debit Card
+   </label>
+
+   </form>
+  
+   <!-- Payment Details -->
+   <div id="paymentDetails" class="mt-3">
+     <form [formGroup]="paymentForm" (ngSubmit)="submitPayment()">
+     <div id="upiDetails" [ngClass]="{'hidden': selectedPayment !== 'upi'}">
+       
+            <!-- Enter UPI ID:
+            <input type="text" 
+                   formControlName="upiId" 
+                   placeholder="example@upi">
+                   <h3>OR</h3> -->
+        
+                   <form (submit)="generateQrCode(); $event.preventDefault()">
+                    
+                     <input 
+                     type="submit" 
+                     value="Scan to pay"
+                    
+                     (click)="generateQrCode(); $event.preventDefault()" />
+                   </form>
+                   <br />
+                   <div id="qr-code"></div>
+        
+         
+         
+        <div *ngIf="paymentForm.get('upiId')?.invalid && paymentForm.get('upiId')?.touched" style="color: red;">
+            Invalid UPI ID format. 
+        </div>
+    </div>
+    
+  
+   <div id="cardDetails"  [ngClass]="{'hidden': selectedPayment !== 'credit' && selectedPayment !== 'debit'}">
+    
+         <!-- Card Number -->
+           <label>Card Number</label>
+           <input
+              type="text"
+              formControlName="cardNumber"
+              (input)="formatCardNumber($event)"
+              placeholder="XXXX XXXX XXXX XXXX"
+              maxlength="19"
+              required
+           />
+          
+           <p *ngIf="cardType !== ''">Card Type: <strong >{{ cardType }}</strong></p>
+           <small *ngIf="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched">
+              Invalid card number or empty.
+            </small>
+         
+        <!-- Cardholder Name -->
+        <label>Cardholder Name</label>
+        <input type="text" formControlName="cardHolderName"  placeholder="Enter name on card" />
+        <small *ngIf="paymentForm.get('cardHolderName')?.invalid && paymentForm.get('cardHolderName')?.touched">
+           Invalid name or empty.
+        </small>
+      
+         <!-- Expiry Date -->
+          <label>Expiry date</label>
+         <select formControlName="expiryMonth">
+           <option value="" disabled >Month</option>
+           <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+       </select>
+       
+       <select formControlName="expiryYear">
+           <option value="" disabled >Year</option>
+           <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+       </select>
+       
+       <small *ngIf="paymentForm.get('expiryYear')?.dirty && paymentForm.get('expiryYear')?.hasError('invalidExpiry')">
+           Expiry date is not valid.
+       </small>
+       
+
+   <!-- CVV -->
+   <label>CVV</label>
+   <input type="password"  formControlName="cvv" placeholder="CVV" maxlength="3" />
+   <small *ngIf="paymentForm.get('cvv')?.invalid && paymentForm.get('cvv')?.touched">
+     Invalid CVV.
+   </small>
+      
+        <button type="submit" >Submit Payment</button>
+      
+   </div>
+  </form>
+   </div>
+   </div>
+  
+   <!-- Pricing Section -->
+   <div class="pricing">
+   <h4><b>Summary</b></h4>
+   <p>Total Product Price: <span>Rs. {{ totalPrice }}</span></p>
+   <p>Total Discount: <span style="color: red;">- Rs. {{ discount.toFixed(2) }}</span></p>
+   <p>Extra Charges (GST + Delivery): <span>Rs. {{ extraCharges }}</span></p>
+   <p><strong>Order Total: <span>Rs. {{ orderTotal.toFixed(2) }}</span></strong></p>
+   </div>
+   </div>
+  
+   <!-- Proceed to Buy Button -->
+   <button 
+   class="buy-btn" 
+   style="background-color: #2ecc71;" 
+   (click)="processTransaction()" 
+   [disabled]="paymentForm.invalid">
+   Proceed to Buy
+</button>
+
+   <!-- Invoice Modal -->
+   <div class="modal" *ngIf="showModal">
+   <div class="modal-content">
+   <h3>Invoice</h3>
+   <p>Transaction ID: <span>{{ transactionDetails.transactionId }}</span></p>
+   <p>Customer ID: <span>{{ transactionDetails.customerId }}</span></p>
+   <p>Product IDs: <span>{{ transactionDetails.productIds.join(', ') }}</span></p>
+   <p>Total Amount: <span>Rs. {{ transactionDetails.totalAmount }}</span></p>
+   <p>No. of Items: <span>{{ transactionDetails.numItems }}</span></p>
+   <p style="color: green; font-weight: bold;">Order Placed Successfully!</p>
+   <button class="close-btn" (click)="closeModal()">Close</button>
+   </div>
+   </div>
+  </div>
